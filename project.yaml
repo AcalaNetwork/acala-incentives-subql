@@ -1,0 +1,38 @@
+specVersion: 0.2.0
+name: acala-incentives
+version: 1.0.0
+description: ''
+repository: ''
+schema:
+  file: ./schema.graphql
+network:
+  genesisHash: '0xdbfe6ec93682a8441a55ca06a251da42a36eaedc9deeb4cc290de6a3beab3c66'
+  endpoint: wss://kusama-1.polkawallet.io:3000
+  chaintypes:
+    file: './src/types.json'
+dataSources:
+  - kind: substrate/Runtime
+    startBlock: 1
+    mapping:
+      file: "./dist/index.js"
+      handlers:
+        - handler: handleDepositDexShare
+          kind: substrate/EventHandler
+          filter:
+            module: incentives 
+            method: DepositDexShare
+        - handler: handleWithdrawDexShare
+          kind: substrate/EventHandler
+          filter:
+            module: incentives 
+            method: WithdrawDexShare
+        - handler: handlePayoutRewards
+          kind: substrate/EventHandler
+          filter:
+            module: incentives 
+            method: PayoutRewards
+        - handler: handleClaimRewards
+          kind: substrate/EventHandler
+          filter:
+            module: incentives 
+            method: ClaimRewards

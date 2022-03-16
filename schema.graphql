@@ -1,0 +1,96 @@
+type Extrinsic @entity {
+  id: ID! # extrinsic hash
+  hash: String
+  block: Block
+
+  address: Account
+  method: String
+  section: String
+}
+
+type Account @entity {
+  id: ID! # user address
+  address: String
+  txCount: BigInt
+
+  userProvision: [UserProvision] @derivedFrom(field: "owner")
+
+  # history
+  depositDexShare: [DepositDexShare] @derivedFrom(field: "address")
+  withdrawDexShare: [WithdrawDexShare] @derivedFrom(field: "address")
+  depositDexShare: [DepositDexShare] @derivedFrom(field: "address")
+  depositDexShare: [DepositDexShare] @derivedFrom(field: "address")
+}
+
+type Token @entity {
+  id: ID!
+
+  name: String
+  decimals: Int
+
+  # history
+  depositDexShare: [DepositDexShare] @derivedFrom(field: "address")
+  withdrawDexShare: [WithdrawDexShare] @derivedFrom(field: "address")
+  depositDexShare: [DepositDexShare] @derivedFrom(field: "address")
+  depositDexShare: [DepositDexShare] @derivedFrom(field: "address")
+}
+
+type DepositDexShare @entity {
+  id: ID!
+
+  address: Account
+  token: Token
+
+  amount: BigInt
+
+  block: Block
+  extrinsic: Extrinsic
+  timestamp: Date
+}
+
+type WithdrawDexShare @entity {
+  id: ID!
+
+  address: Account
+  token: Token
+
+  amount: BigInt
+
+  block: Block
+  extrinsic: Extrinsic
+  timestamp: Date
+}
+
+type PayoutRewards @entity {
+  # who, pool_id, reward_currency_type, actual_payout, deduction_amount
+  id: ID!
+
+  address: Account
+  token: Token
+  pool: String
+
+  rewardCurrencyType: BigInt
+  actualPayout: BigInt
+  deductionAmount: BigInt
+
+  block: Block
+  extrinsic: Extrinsic
+  timestamp: Date
+}
+
+type ClaimRewards @entity {
+  # who, pool_id, reward_currency_id, actual_amount, deduction_amount
+  id: ID!
+
+  address: Account
+  token: Token
+  pool: String
+
+  actualAmount: BigInt
+  deductionAmount: BigInt
+
+  block: Block
+  extrinsic: Extrinsic
+  timestamp: Date
+}
+
