@@ -18,8 +18,8 @@ type Account @entity {
   # history
   depositDexShare: [DepositDexShare] @derivedFrom(field: "address")
   withdrawDexShare: [WithdrawDexShare] @derivedFrom(field: "address")
-  depositDexShare: [DepositDexShare] @derivedFrom(field: "address")
-  depositDexShare: [DepositDexShare] @derivedFrom(field: "address")
+  payoutRewards: [PayoutRewards] @derivedFrom(field: "address")
+  claimRewards: [ClaimRewards] @derivedFrom(field: "address")
 }
 
 type Token @entity {
@@ -29,10 +29,10 @@ type Token @entity {
   decimals: Int
 
   # history
-  depositDexShare: [DepositDexShare] @derivedFrom(field: "address")
-  withdrawDexShare: [WithdrawDexShare] @derivedFrom(field: "address")
-  depositDexShare: [DepositDexShare] @derivedFrom(field: "address")
-  depositDexShare: [DepositDexShare] @derivedFrom(field: "address")
+  depositDexShare: [DepositDexShare] @derivedFrom(field: "token")
+  withdrawDexShare: [WithdrawDexShare] @derivedFrom(field: "token")
+  payoutRewards: [PayoutRewards] @derivedFrom(field: "token")
+  claimRewards: [ClaimRewards] @derivedFrom(field: "token")
 }
 
 type DepositDexShare @entity {
