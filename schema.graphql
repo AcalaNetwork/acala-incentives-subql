@@ -1,3 +1,10 @@
+type Block @entity {
+  id: ID! # block number
+  hash: String
+  number: BigInt
+  timestamp: Date
+}
+
 type Extrinsic @entity {
   id: ID! # extrinsic hash
   hash: String
@@ -12,8 +19,6 @@ type Account @entity {
   id: ID! # user address
   address: String
   txCount: BigInt
-
-  userProvision: [UserProvision] @derivedFrom(field: "owner")
 
   # history
   depositDexShare: [DepositDexShare] @derivedFrom(field: "address")
