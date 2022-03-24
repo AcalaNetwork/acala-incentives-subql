@@ -8,11 +8,6 @@ export const payoutRewards = async (event: SubstrateEvent) => {
   // who, pool_id, reward_currency_type, actual_payout, deduction_amount
   const [account, pool, reward_currency_type, actual_payout, deduction_amount] = event.event.data as unknown as [AccountId, any, CurrencyId, Balance, Balance];
 
-  logger.info(`${account.toString()}`)
-  logger.info(`${pool.toString()}`)
-  logger.info(`${reward_currency_type.toString()}`)
-  logger.info(`${actual_payout.toString()}`)
-  logger.info(`${deduction_amount.toString()}`)
   const blockData = await ensureBlock(event);
   await getAccount(account.toString());
   const token = await getToken(forceToCurrencyName(reward_currency_type));
