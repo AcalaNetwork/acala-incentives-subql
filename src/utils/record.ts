@@ -105,7 +105,6 @@ export const getPayoutRewards = async (id: string) => {
 		newRecord.addressId = "";
 		newRecord.tokenId = "";
     newRecord.pool = '';
-		newRecord.rewardCurrencyTypeId = "";
 		newRecord.actualPayout = BigInt(0);
 		newRecord.deductionAmount = BigInt(0);
 		newRecord.blockId = "";
