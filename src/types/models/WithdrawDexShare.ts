@@ -5,6 +5,8 @@ import assert from 'assert';
 
 
 
+type WithdrawDexShareProps = Omit<WithdrawDexShare, NonNullable<FunctionPropertyNames<WithdrawDexShare>>>;
+
 export class WithdrawDexShare implements Entity {
 
     constructor(id: string) {
@@ -41,7 +43,7 @@ export class WithdrawDexShare implements Entity {
         assert((id !== null && id !== undefined), "Cannot get WithdrawDexShare entity without an ID");
         const record = await store.get('WithdrawDexShare', id.toString());
         if (record){
-            return WithdrawDexShare.create(record);
+            return WithdrawDexShare.create(record as WithdrawDexShareProps);
         }else{
             return;
         }
@@ -51,33 +53,33 @@ export class WithdrawDexShare implements Entity {
     static async getByAddressId(addressId: string): Promise<WithdrawDexShare[] | undefined>{
       
       const records = await store.getByField('WithdrawDexShare', 'addressId', addressId);
-      return records.map(record => WithdrawDexShare.create(record));
+      return records.map(record => WithdrawDexShare.create(record as WithdrawDexShareProps));
       
     }
 
     static async getByTokenId(tokenId: string): Promise<WithdrawDexShare[] | undefined>{
       
       const records = await store.getByField('WithdrawDexShare', 'tokenId', tokenId);
-      return records.map(record => WithdrawDexShare.create(record));
+      return records.map(record => WithdrawDexShare.create(record as WithdrawDexShareProps));
       
     }
 
     static async getByBlockId(blockId: string): Promise<WithdrawDexShare[] | undefined>{
       
       const records = await store.getByField('WithdrawDexShare', 'blockId', blockId);
-      return records.map(record => WithdrawDexShare.create(record));
+      return records.map(record => WithdrawDexShare.create(record as WithdrawDexShareProps));
       
     }
 
     static async getByExtrinsicId(extrinsicId: string): Promise<WithdrawDexShare[] | undefined>{
       
       const records = await store.getByField('WithdrawDexShare', 'extrinsicId', extrinsicId);
-      return records.map(record => WithdrawDexShare.create(record));
+      return records.map(record => WithdrawDexShare.create(record as WithdrawDexShareProps));
       
     }
 
 
-    static create(record: Partial<Omit<WithdrawDexShare, FunctionPropertyNames<WithdrawDexShare>>> & Entity): WithdrawDexShare {
+    static create(record: WithdrawDexShareProps): WithdrawDexShare {
         assert(typeof record.id === 'string', "id must be provided");
         let entity = new WithdrawDexShare(record.id);
         Object.assign(entity,record);

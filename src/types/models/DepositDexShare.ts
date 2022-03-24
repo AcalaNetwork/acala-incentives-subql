@@ -5,6 +5,8 @@ import assert from 'assert';
 
 
 
+type DepositDexShareProps = Omit<DepositDexShare, NonNullable<FunctionPropertyNames<DepositDexShare>>>;
+
 export class DepositDexShare implements Entity {
 
     constructor(id: string) {
@@ -41,7 +43,7 @@ export class DepositDexShare implements Entity {
         assert((id !== null && id !== undefined), "Cannot get DepositDexShare entity without an ID");
         const record = await store.get('DepositDexShare', id.toString());
         if (record){
-            return DepositDexShare.create(record);
+            return DepositDexShare.create(record as DepositDexShareProps);
         }else{
             return;
         }
@@ -51,33 +53,33 @@ export class DepositDexShare implements Entity {
     static async getByAddressId(addressId: string): Promise<DepositDexShare[] | undefined>{
       
       const records = await store.getByField('DepositDexShare', 'addressId', addressId);
-      return records.map(record => DepositDexShare.create(record));
+      return records.map(record => DepositDexShare.create(record as DepositDexShareProps));
       
     }
 
     static async getByTokenId(tokenId: string): Promise<DepositDexShare[] | undefined>{
       
       const records = await store.getByField('DepositDexShare', 'tokenId', tokenId);
-      return records.map(record => DepositDexShare.create(record));
+      return records.map(record => DepositDexShare.create(record as DepositDexShareProps));
       
     }
 
     static async getByBlockId(blockId: string): Promise<DepositDexShare[] | undefined>{
       
       const records = await store.getByField('DepositDexShare', 'blockId', blockId);
-      return records.map(record => DepositDexShare.create(record));
+      return records.map(record => DepositDexShare.create(record as DepositDexShareProps));
       
     }
 
     static async getByExtrinsicId(extrinsicId: string): Promise<DepositDexShare[] | undefined>{
       
       const records = await store.getByField('DepositDexShare', 'extrinsicId', extrinsicId);
-      return records.map(record => DepositDexShare.create(record));
+      return records.map(record => DepositDexShare.create(record as DepositDexShareProps));
       
     }
 
 
-    static create(record: Partial<Omit<DepositDexShare, FunctionPropertyNames<DepositDexShare>>> & Entity): DepositDexShare {
+    static create(record: DepositDexShareProps): DepositDexShare {
         assert(typeof record.id === 'string', "id must be provided");
         let entity = new DepositDexShare(record.id);
         Object.assign(entity,record);

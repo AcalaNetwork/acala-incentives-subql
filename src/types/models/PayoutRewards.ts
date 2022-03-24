@@ -5,6 +5,8 @@ import assert from 'assert';
 
 
 
+type PayoutRewardsProps = Omit<PayoutRewards, NonNullable<FunctionPropertyNames<PayoutRewards>>>;
+
 export class PayoutRewards implements Entity {
 
     constructor(id: string) {
@@ -20,7 +22,7 @@ export class PayoutRewards implements Entity {
 
     public pool?: string;
 
-    public rewardCurrencyType?: bigint;
+    public rewardCurrencyTypeId?: string;
 
     public actualPayout?: bigint;
 
@@ -47,7 +49,7 @@ export class PayoutRewards implements Entity {
         assert((id !== null && id !== undefined), "Cannot get PayoutRewards entity without an ID");
         const record = await store.get('PayoutRewards', id.toString());
         if (record){
-            return PayoutRewards.create(record);
+            return PayoutRewards.create(record as PayoutRewardsProps);
         }else{
             return;
         }
@@ -57,33 +59,40 @@ export class PayoutRewards implements Entity {
     static async getByAddressId(addressId: string): Promise<PayoutRewards[] | undefined>{
       
       const records = await store.getByField('PayoutRewards', 'addressId', addressId);
-      return records.map(record => PayoutRewards.create(record));
+      return records.map(record => PayoutRewards.create(record as PayoutRewardsProps));
       
     }
 
     static async getByTokenId(tokenId: string): Promise<PayoutRewards[] | undefined>{
       
       const records = await store.getByField('PayoutRewards', 'tokenId', tokenId);
-      return records.map(record => PayoutRewards.create(record));
+      return records.map(record => PayoutRewards.create(record as PayoutRewardsProps));
+      
+    }
+
+    static async getByRewardCurrencyTypeId(rewardCurrencyTypeId: string): Promise<PayoutRewards[] | undefined>{
+      
+      const records = await store.getByField('PayoutRewards', 'rewardCurrencyTypeId', rewardCurrencyTypeId);
+      return records.map(record => PayoutRewards.create(record as PayoutRewardsProps));
       
     }
 
     static async getByBlockId(blockId: string): Promise<PayoutRewards[] | undefined>{
       
       const records = await store.getByField('PayoutRewards', 'blockId', blockId);
-      return records.map(record => PayoutRewards.create(record));
+      return records.map(record => PayoutRewards.create(record as PayoutRewardsProps));
       
     }
 
     static async getByExtrinsicId(extrinsicId: string): Promise<PayoutRewards[] | undefined>{
       
       const records = await store.getByField('PayoutRewards', 'extrinsicId', extrinsicId);
-      return records.map(record => PayoutRewards.create(record));
+      return records.map(record => PayoutRewards.create(record as PayoutRewardsProps));
       
     }
 
 
-    static create(record: Partial<Omit<PayoutRewards, FunctionPropertyNames<PayoutRewards>>> & Entity): PayoutRewards {
+    static create(record: PayoutRewardsProps): PayoutRewards {
         assert(typeof record.id === 'string', "id must be provided");
         let entity = new PayoutRewards(record.id);
         Object.assign(entity,record);

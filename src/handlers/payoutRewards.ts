@@ -1,21 +1,23 @@
-import { AccountId, Balance } from "@acala-network/types/interfaces";
+import { forceToCurrencyName } from "@acala-network/sdk-core";
+import { AccountId, Balance, CurrencyId } from "@acala-network/types/interfaces";
 import { SubstrateEvent } from "@subql/types";
-import { getAccount, getPayoutRewards } from "../utils/record";
+import { getAccount, getPayoutRewards, getToken } from "../utils/record";
 import { ensureBlock, ensureExtrinsic } from "./event";
 
 export const payoutRewards = async (event: SubstrateEvent) => {
   // who, pool_id, reward_currency_type, actual_payout, deduction_amount
-  const [account, pool, reward_currency_type, actual_payout, deduction_amount] = event.event.data as unknown as [AccountId, any, Balance, Balance, Balance];
+  const [account, pool, reward_currency_type, actual_payout, deduction_amount] = event.event.data as unknown as [AccountId, any, CurrencyId, Balance, Balance];
 
   const blockData = await ensureBlock(event);
   await getAccount(account.toString());
+  const token = await getToken(forceToCurrencyName(reward_currency_type));
 
   const historyId = `${blockData.id}-${event.event.index.toString()}`;
   const history = await getPayoutRewards(historyId);
 
   history.addressId = account.toString();
   history.pool = pool.toString();
-  history.rewardCurrencyType = BigInt(reward_currency_type.toString());
+  history.rewardCurrencyTypeId = token.name;
   history.actualPayout = BigInt(actual_payout.toString());
   history.deductionAmount = BigInt(deduction_amount.toString());
   history.blockId = blockData.id;
