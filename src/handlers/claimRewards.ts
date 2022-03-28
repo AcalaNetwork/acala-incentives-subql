@@ -1,6 +1,7 @@
 import { forceToCurrencyName } from "@acala-network/sdk-core";
 import { AccountId, Balance, CurrencyId } from "@acala-network/types/interfaces";
 import { SubstrateEvent } from "@subql/types";
+import { getPoolId } from "../utils/getPoolId";
 import { getAccount, getClaimRewards, getToken } from "../utils/record";
 import { ensureBlock, ensureExtrinsic } from "./event";
 
@@ -16,7 +17,7 @@ export const claimRewards = async (event: SubstrateEvent) => {
 
   history.addressId = account.toString();
   history.tokenId = token.name;
-  history.pool = pool.toString();
+  history.pool = getPoolId(pool.toString());
   history.actualAmount = BigInt(actual_amount.toString());
   history.deductionAmount = BigInt(deduction_amount.toString());
   history.blockId = blockData.id;
