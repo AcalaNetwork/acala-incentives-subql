@@ -17,7 +17,7 @@ export const claimRewards = async (event: SubstrateEvent) => {
 
   history.addressId = account.toString();
   history.tokenId = token.name;
-  history.pool = getPoolId(pool.toString());
+  history.pool = getPoolId(pool);
   history.actualAmount = BigInt(actual_amount.toString());
   history.deductionAmount = BigInt(deduction_amount.toString());
   history.blockId = blockData.id;
