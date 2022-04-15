@@ -12,7 +12,7 @@ export const payoutRewards = async (event: SubstrateEvent) => {
   await getAccount(account.toString());
   const token = await getToken(forceToCurrencyName(reward_currency_type));
 
-  const historyId = `${blockData.id}-${event.event.index.toString()}`;
+  const historyId = `${blockData.id}-${event.idx.toString()}`;
   const history = await getPayoutRewards(historyId);
 
   history.addressId = account.toString();
